@@ -17,5 +17,12 @@ Discordコミニティで利用されているBotのJavascriptバージョンで
 - [ ] 勉強部屋への招待
 
 ## 使い方
-カレントディレクトリの`config.json`にBotアカウントのIDとトークンを入力したら、
+カレントディレクトリに`config.json`というファイルを作成したら、そのファイルに以下をコピペしてください。
+```json
+{
+  "clientId": "your-bot-id-here",
+  "token": "your-bot-token-here"
+}
+```
+`clientId`と`token`を入力したら、
 `deploy-commands.js`を一回走らせたあと`index.js`で起動してください。
