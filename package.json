@@ -1,0 +1,28 @@
+{
+  "name": "pathcord",
+  "version": "0.0.1",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [],
+  "author": "HayatoFukami",
+  "license": "ISC",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/HayatoFukami/pathcord.js.git"
+  },
+  "bugs": {
+    "url": "https://github.com/HayatoFukami/pathcord.js/issues"
+  },
+  "homepage": "https://github.com/HayatoFukami/pathcord.js#readme",
+  "description": "",
+  "dependencies": {
+    "discord.js": "^14.12.1",
+    "sequelize": "^6.37.1",
+    "sqlite3": "^5.1.7"
+  },
+  "devDependencies": {
+    "eslint": "^8.57.0"
+  }
+}
