@@ -20,6 +20,12 @@ const sql = {
 		db.run(
 			'insert into tbl_session values (?, ?, ?, ?, ?, ?);',
 			[guild.id, channel.id, member.id, Date.now(), null, null],
+			(err) => {
+				if (err) {
+					reject(err)
+				}
+				resolve()
+			}
 		);
 	}),
 };

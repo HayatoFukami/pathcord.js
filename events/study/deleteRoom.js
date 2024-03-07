@@ -24,6 +24,12 @@ const sql = {
 		db.run(
 			'delete from tbl_room where clm_channel_id = ?;',
 			[channel.id],
+			(err) => {
+				if (err) {
+					reject(err)
+				}
+				resolve()
+			}
 		);
 	}),
 };
@@ -34,7 +40,7 @@ module.exports = {
 		const member = oldState.member;
 		const channel = oldState.channel;
 
-		if (member.bot) {
+		if (member.bot || !channel) {
 			return;
 		}
 
@@ -46,7 +52,7 @@ module.exports = {
 			return;
 		}
 
-		await sleep(300);
+		await sleep(3);
 
 		if (!channel.members) {
 			return;

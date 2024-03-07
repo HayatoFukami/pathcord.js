@@ -24,6 +24,7 @@ const sql = {
 				if (err) {
 					reject(err);
 				}
+				resolve()
 			},
 		);
 	}),

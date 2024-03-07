@@ -20,6 +20,12 @@ const sql = {
 		db.run(
 			'insert into tbl_room values (?, ?, ?);',
 			[guild.id, room.id, member.id],
+			(err) => {
+				if (err) {
+					reject(err)
+				}
+				resolve()
+			}
 		);
 	}),
 };
@@ -34,8 +40,6 @@ module.exports = {
 		if (!channel || member.bot) {
 			return;
 		}
-
-		const db = new sqlite3.Database('./database/study.db');
 
 		if (!await sql.getCreateChannel(channel)) {
 			return;
