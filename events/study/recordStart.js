@@ -16,10 +16,10 @@ const sql = {
 			},
 		);
 	}),
-	insertStartSession: (guild, member) => new Promise((resolve, reject) => {
+	insertStartSession: (guild, channel, member) => new Promise((resolve, reject) => {
 		db.run(
-			'insert into tbl_session values (?, ?, ?, ?, ?);',
-			[guild.id, member.id, Date.now(), null, null],
+			'insert into tbl_session values (?, ?, ?, ?, ?, ?);',
+			[guild.id, channel.id, member.id, Date.now(), null, null],
 		);
 	}),
 };
@@ -44,7 +44,7 @@ module.exports = {
 			return;
 		}
 
-		await sql.insertStartSession(guild, member);
+		await sql.insertStartSession(guild, newChannel, member);
 
 		return console.info(`Recorded the start time of study: ${member.name}`);
 	},
