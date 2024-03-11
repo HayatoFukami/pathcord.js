@@ -34,7 +34,6 @@ module.exports = {
 	name: Events.VoiceStateUpdate,
 	async execute(oldState, newState) {
 		const member = oldState.member;
-		const guild = oldState.guild;
 		const oldChannel = oldState.channel;
 		const newChannel = newState.channel;
 
