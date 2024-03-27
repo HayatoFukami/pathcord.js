@@ -1,35 +1,6 @@
 const { Events } = require('discord.js');
 const sqlite3 = require('sqlite3');
 
-const db = new sqlite3.Database('./database/study.db');
-
-const sql = {
-	getCreateChannel: (channel) => new Promise((resolve, reject) => {
-		db.get(
-			'select * from tbl_create where clm_channel_id = ?;',
-			[channel.id],
-			(err, row) => {
-				if (err) {
-					return reject(err);
-				}
-				resolve(row);
-			},
-		);
-	}),
-	insertRoom: (guild, room, member) => new Promise((resolve, reject) => {
-		db.run(
-			'insert into tbl_room values (?, ?, ?);',
-			[guild.id, room.id, member.id],
-			(err) => {
-				if (err) {
-					reject(err)
-				}
-				resolve()
-			}
-		);
-	}),
-};
-
 module.exports = {
 	name: Events.VoiceStateUpdate,
 	async execute(oldState, newState) {
@@ -58,4 +29,33 @@ module.exports = {
 
 		return console.info(`Created a new room: ${room.name}`);
 	},
+};
+
+const db = new sqlite3.Database('./database/study.db');
+
+const sql = {
+	getCreateChannel: (channel) => new Promise((resolve, reject) => {
+		db.get(
+			'select * from tbl_create where clm_channel_id = ?;',
+			[channel.id],
+			(err, row) => {
+				if (err) {
+					return reject(err);
+				}
+				resolve(row);
+			},
+		);
+	}),
+	insertRoom: (guild, room, member) => new Promise((resolve, reject) => {
+		db.run(
+			'insert into tbl_room values (?, ?, ?);',
+			[guild.id, room.id, member.id],
+			(err) => {
+				if (err) {
+					reject(err);
+				}
+				resolve();
+			},
+		);
+	}),
 };

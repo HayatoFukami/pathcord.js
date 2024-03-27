@@ -52,6 +52,8 @@ module.exports = {
 
 		await sql.insertStartSession(guild, newChannel, member);
 
+		console.log(member)
+
 		return console.info(`Recorded the start time of study: ${member.name}`);
 	},
 };

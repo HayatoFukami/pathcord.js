@@ -24,7 +24,19 @@ const sql = {
 				if (err) {
 					reject(err);
 				}
-				resolve()
+				resolve();
+			},
+		);
+	}),
+	deleteMemberSession: (guild, member, start) => new Promise((resolve, reject) => {
+		db.run(
+			'delete from tbl_session where clm_guild_id = ? and clm_member_id = ? and clm_start_timestamp = ?;',
+			[guild.id, member.id, start],
+			(err) => {
+				if (err) {
+					reject(err);
+				}
+				resolve();
 			},
 		);
 	}),
@@ -52,7 +64,7 @@ module.exports = {
 		}
 
 		const now = Date.now();
-		const total = now - memberSession['clm_start_timestamp'];
+		const total = Math.floor((now - memberSession['clm_start_timestamp']) / 1000);
 
 		await sql.updateMemberSession(oldChannel, member, now, total);
 
