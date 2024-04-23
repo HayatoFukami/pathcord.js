@@ -67,4 +67,25 @@ for (const folder of processFolders) {
 	}
 }
 
+// タスクファイルのロード
+const taskFoldersPath = path.join(__dirname, 'tasks');
+const taskFolders = fs.readdirSync(taskFoldersPath);
+
+for (const folder of taskFolders) {
+	const taskPath = path.join(taskFoldersPath, folder);
+	const taskFiles = fs.readdirSync(taskPath).filter(file => file.endsWith('.js'));
+	for (const file of taskFiles) {
+		const filePath = path.join(taskPath, file);
+		const task = require(filePath);
+		if (task.once) {
+			client.once(task.name, (...args) => task.execute(...args));
+			console.warn(`Loaded task file (once): ${file}`);
+		}
+		else {
+			client.on(task.name, (...args) => task.execute(...args));
+			console.info(`Loaded task file: ${file}`);
+		}
+	}
+}
+
 client.login(token);

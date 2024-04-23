@@ -4,8 +4,15 @@ const sqlite3 = require('sqlite3');
 module.exports = {
 	name: Events.InteractionCreate,
 	async execute(interaction) {
-		if (interaction.options.getSubcommand() !== 'status') {
-			return;
+		try {
+			if (interaction.commandName !== 'study') {
+				return;
+			}
+			else if (interaction.options.getSubcommand() !== 'status') {
+				return;
+			}
+		} catch (e) {
+			return e;
 		}
 
 		const guild = interaction.guild;
@@ -36,8 +43,6 @@ module.exports = {
 		const totalTime = secToTime(totalSec);
 
 		const week = getStartAndEndOfWeek();
-
-		console.log(week)
 
 		const weekSessions = await sql.allWeekSessions(guild.id, week.startOfWeek, week.endOfWeek);
 
@@ -95,6 +100,7 @@ module.exports = {
 
 		await interaction.reply({
 			embeds: [embed],
+			ephemeral: true,
 		});
 	},
 };

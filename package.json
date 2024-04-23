@@ -18,6 +18,7 @@
   "homepage": "https://github.com/HayatoFukami/pathcord.js#readme",
   "description": "",
   "dependencies": {
+    "@discordjs/collection": "^2.0.0",
     "discord.js": "^14.12.1",
     "sequelize": "^6.37.1",
     "sqlite3": "^5.1.7"
