@@ -1,6 +1,7 @@
 const { SlashCommandBuilder } = require('discord.js');
 
 module.exports = {
+	load: true,
 	data: new SlashCommandBuilder()
 		.setName('settings')
 		.setDescription('Botの一般的な設定関連のコマンドです。')

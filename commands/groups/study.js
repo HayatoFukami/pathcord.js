@@ -1,6 +1,7 @@
 const { SlashCommandBuilder } = require('discord.js');
 
 module.exports = {
+	load: true,
 	data: new SlashCommandBuilder()
 		.setName('study')
 		.setDescription('勉強機能関連のコマンドです。')

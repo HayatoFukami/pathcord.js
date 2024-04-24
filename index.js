@@ -21,9 +21,12 @@ for (const folder of commandFolders) {
 	for (const file of commandFiles) {
 		const filePath = path.join(commandsPath, file);
 		const command = require(filePath);
-		if ('data' in command && 'execute' in command) {
+		if (('data' in command) && ('execute' in command) && (command.load)) {
 			client.commands.set(command.data.name, command);
 			console.info(`Loaded command file: ${file}`);
+		}
+		else if ((command.load === false) || (command.load === null)) {
+			console.warn(`The command at ${filePath} is load option is false.`);
 		}
 		else {
 			console.warn(`The command at ${filePath} is missing a required "data" or "execute" property.`);
@@ -41,13 +44,16 @@ for (const folder of eventFolders) {
 	for (const file of eventFiles) {
 		const filePath = path.join(eventsPath, file);
 		const event = require(filePath);
-		if (event.once) {
+		if (event.once && event.load) {
 			client.once(event.name, (...args) => event.execute(...args));
 			console.warn(`Loaded event file (once): ${file}`);
 		}
-		else {
+		else if (event.load) {
 			client.on(event.name, (...args) => event.execute(...args));
 			console.info(`Loaded event file: ${file}`);
+		}
+		else {
+			console.warn(`The event at ${filePath} is load options false.`);
 		}
 	}
 }
@@ -62,8 +68,13 @@ for (const folder of processFolders) {
 	for (const file of processFiles) {
 		const filePath = path.join(processPath, file);
 		const process = require(filePath);
-		client.on(process.name, (...args) => process.execute(...args));
-		console.info(`Loaded process file: ${file}`);
+		if (process.load) {
+			client.on(process.name, (...args) => process.execute(...args));
+			console.info(`Loaded process file: ${file}`);
+		}
+		else {
+			console.warn(`The process at ${filePath} is load option false.`);
+		}
 	}
 }
 
@@ -77,13 +88,16 @@ for (const folder of taskFolders) {
 	for (const file of taskFiles) {
 		const filePath = path.join(taskPath, file);
 		const task = require(filePath);
-		if (task.once) {
+		if (task.once && task.load) {
 			client.once(task.name, (...args) => task.execute(...args));
 			console.warn(`Loaded task file (once): ${file}`);
 		}
-		else {
+		else if (task.load) {
 			client.on(task.name, (...args) => task.execute(...args));
 			console.info(`Loaded task file: ${file}`);
+		}
+		else {
+			console.info(`The task at ${filePath} is load option false.`);
 		}
 	}
 }

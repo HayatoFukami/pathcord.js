@@ -3,6 +3,7 @@ const sqlite3 = require('sqlite3');
 
 module.exports = {
 	name: Events.VoiceStateUpdate,
+	load: true,
 	async execute(oldState, newState) {
 		const member = oldState.member;
 		const channel = oldState.channel;

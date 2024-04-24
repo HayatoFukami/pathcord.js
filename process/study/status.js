@@ -3,6 +3,7 @@ const sqlite3 = require('sqlite3');
 
 module.exports = {
 	name: Events.InteractionCreate,
+	load: true,
 	async execute(interaction) {
 		try {
 			if (interaction.commandName !== 'study') {

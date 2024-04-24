@@ -32,6 +32,7 @@ const sql = {
 
 module.exports = {
 	name: Events.VoiceStateUpdate,
+	load: true,
 	async execute(oldState, newState) {
 		const guild = newState.guild;
 		const member = newState.member;

@@ -44,6 +44,7 @@ const sql = {
 
 module.exports = {
 	name: Events.VoiceStateUpdate,
+	load: true,
 	async execute(oldState, newState) {
 		const member = oldState.member;
 		const oldChannel = oldState.channel;
@@ -70,7 +71,7 @@ module.exports = {
 
 		await sql.updateMemberSession(oldChannel, member, now, total);
 
-		const ember = new EmbedBuilder()
+		const embed = new EmbedBuilder()
 
 		return console.info(`Recorded end time: ${member.name}`);
 	},
