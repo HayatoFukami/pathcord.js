@@ -1,4 +1,4 @@
-const { Events } = require('discord.js');
+const { Events, EmbedBuilder } = require('discord.js');
 const sqlite3 = require('sqlite3');
 
 const db = new sqlite3.Database('./database/study.db');
@@ -66,7 +66,11 @@ module.exports = {
 		const now = Date.now();
 		const total = Math.floor((now - memberSession['clm_start_timestamp']) / 1000);
 
+		// ToDo 勉強時間が5分未満だった場合セッションを記録しないようにする
+
 		await sql.updateMemberSession(oldChannel, member, now, total);
+
+		const ember = new EmbedBuilder()
 
 		return console.info(`Recorded end time: ${member.name}`);
 	},
