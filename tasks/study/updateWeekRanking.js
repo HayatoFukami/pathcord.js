@@ -4,7 +4,7 @@ const sqlite3 = require('sqlite3');
 const updateWeekRanking = async (client) => {
 	const embeds = await sql.getEmbeds();
 
-	if (!embeds.length) {
+	if (!embeds) {
 		return;
 	}
 
@@ -21,9 +21,10 @@ const updateWeekRanking = async (client) => {
 		const totalDesc = await sql.allTotalDesc(guild.id); // [[memberId, total, count], ...]
 
 		// week ranking embed
-		const embed = new EmbedBuilder()
+		const rankingEmbed = new EmbedBuilder()
 			.setColor(0x7fffbf)
-			.setTitle('WeekRanking')
+			.setTitle('週間勉強時間ランキング')
+			.setDescription('今週の勉強時間の上位10名を表示しています。')
 			.setFooter({ text: `更新日時：${new Date().toLocaleString()}` });
 
 		let rank = 1;
@@ -35,13 +36,18 @@ const updateWeekRanking = async (client) => {
 				continue;
 			}
 
-			const hms = secToHMS(i['total'])
+			const hms = secToHMS(i['total']);
 
-			embed.addFields({
+			rankingEmbed.addFields({
 				name: `${rank}位│${member.displayName}`,
 				value: `${hms[0]}時間 ${hms[1]}分 ${hms[2]}秒 [${i['count']}回]`,
+				inline: false,
 			});
+
+			rank++;
 		}
+
+		await msg.edit({ embeds: [rankingEmbed] });
 	}
 
 	return await runOneHourLater(client);
@@ -103,7 +109,7 @@ const sql = {
 
 module.exports = {
 	name: Events.ClientReady,
-	load: false,
+	load: true,
 	once: true,
 	async execute(client) {
 		await updateWeekRanking(client);

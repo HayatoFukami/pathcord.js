@@ -13,6 +13,11 @@ module.exports = {
 					option.setName('メンバー')
 						.setDescription('ステータス情報を取得したいメンバーを指定できます。'),
 				),
+		)
+		.addSubcommand((subcommand) =>
+			subcommand
+				.setName('add_ranking')
+				.setDescription('set ranking embed channel.')
 		),
 	async execute(interaction) {
 		return interaction.options.getSubcommand();
